@@ -7,11 +7,10 @@ void open() {
     for (i = 0; i < 50; i++) {
         if (bank[0][i] == 0) {
             bank[0][i] = 901.0 + i;
-            printf("the account number is: %d\n", 901 + i);
+            printf("The account number is: %d\n", 901 + i);
             printf("Enter initial deposit: ");
             double money;
-            char t;
-            scanf("%lf%c", &money, &t);
+            scanf(" %lf", &money);
             bank[1][i] = money;
             return;
         }
@@ -23,7 +22,7 @@ void balance(int account_number) {
     if (account_number < 901 || account_number > 950 || bank[0][account_number - 901] == 0) {
         printf("There is no such account\n");
     } else
-        printf("%.2f\n", bank[1][account_number - 901]);
+        printf("The balance is %.2f $\n", bank[1][account_number - 901]);
 }
 
 void deposit(int account_number, double amount) {
@@ -51,7 +50,7 @@ void close(int account_number) {
     } else {
         bank[0][account_number - 901] = 0;
         bank[0][account_number - 901] = 0;
-        printf("Account number %d closed.\n", account_number);
+        printf("Account number %d closed\n", account_number);
     }
 }
 
