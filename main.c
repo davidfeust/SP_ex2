@@ -1,8 +1,18 @@
 #include <stdio.h>
 #include "myBank.h"
 
+void getInput(int *i, double *d) {
+    char t;
+    printf("enter account number and amount:\n");
+    scanf("%d%c", i, &t);
+    scanf("%lf%c", d, &t);
+}
+
 int main() {
     char c;
+    int account_number;
+    double amount;
+    double interest_rate;
     do {
         printf("Enter char operation:\n"
                "\tO: Open account\n"
@@ -13,8 +23,7 @@ int main() {
                "\tI: Adding interest\n"
                "\tP: Print all open accounts\n"
                "\tE: Close all accounts and exit\n");
-        scanf("%c", &c);
-        int b;
+        scanf(" %c", &c);
         char t;
         switch (c) {
             case 'O':
@@ -22,27 +31,32 @@ int main() {
                 break;
             case 'B':
                 printf("enter account number\n");
-
-                scanf(" %d%c", &b, &t);
-                balance(b);
+                scanf(" %d%c", &account_number, &t);
+                balance(account_number);
                 break;
             case 'D':
-                printf("enter account number and amount:\n");
-                int account_number;
-                double amount;
-                scanf("%d%c", &account_number, &t);
-                scanf("%lf%c", &amount, &t);
+                getInput(&account_number, &amount);
                 deposit(account_number, amount);
                 break;
-//            case 'W': withdrawal();
-//                break;
-//            case 'C': close();
-//                break;
-//            case 'I': interest();
-//                break;
-//            case 'P': print();
-//                break;
+            case 'W':
+                getInput(&account_number, &amount);
+                withdrawal(account_number, amount);
+                break;
+            case 'C':
+                printf("enter account number\n");
+                scanf(" %d%c", &account_number, &t);
+                close(account_number);
+                break;
+            case 'I':
+                printf("enter interest rate [-99, 99]\n");
+                scanf(" %lf%c", &interest_rate, &t);
+                interest(interest_rate);
+                break;
+            case 'P':
+                print();
+                break;
             case 'E':
+                closeAll();
                 break;
             default:
                 printf("Enter valid char, not[%c]\n", c);

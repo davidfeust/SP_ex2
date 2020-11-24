@@ -11,12 +11,15 @@ void balance(int);
 
 void deposit(int, double);
 
-withdrawal();
+void withdrawal(int, double);
 
-close();
+void close(int);
 
-interest();
+void interest(double);
 
-print();
+void print();
 
-#endif //EX2_MYBANK_H
+void closeAll();
+
+
+#endif EX2_MYBANK_H

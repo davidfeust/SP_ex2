@@ -13,25 +13,69 @@ void open() {
             char t;
             scanf("%lf%c", &money, &t);
             bank[1][i] = money;
-//            printf("%lf", money);
             return;
         }
     }
     printf("There no room for anther account :(\n");
-    return;
 }
 
 void balance(int account_number) {
-    if (bank[0][account_number - 901] != 0) {
+    if (account_number < 901 || account_number > 950 || bank[0][account_number - 901] == 0) {
+        printf("There is no such account\n");
+    } else
         printf("%.2f\n", bank[1][account_number - 901]);
-        return;
-    }
-    printf("There is no such account\n");
 }
 
 void deposit(int account_number, double amount) {
-    if (bank[0][account_number -901] != 0) {
+    if (account_number < 901 || account_number > 950 || bank[0][account_number - 901] == 0) {
+        printf("There is no such account\n");
+    } else
         bank[1][account_number - 901] += amount;
+
+}
+
+void withdrawal(int account_number, double amount) {
+    if (account_number < 901 || account_number > 950 || bank[0][account_number - 901] == 0) {
+        printf("There is no such account\n");
+    } else if (bank[1][account_number - 901] - amount < 0) {
+        printf("There is no enough money\n");
+    } else {
+        bank[1][account_number - 901] -= amount;
+        printf("You have %f dollars$$ left\n", bank[1][account_number - 901]);
     }
-    printf("There is no such account\n");
+}
+
+void close(int account_number) {
+    if (account_number < 901 || account_number > 950 || bank[0][account_number - 901] == 0) {
+        printf("There is no such account\n");
+    } else {
+        bank[0][account_number - 901] = 0;
+        bank[0][account_number - 901] = 0;
+        printf("Account number %d closed.\n", account_number);
+    }
+}
+
+void interest(double d) {
+    if (d > 99 || d < -99) {
+        printf("Not legal rate");
+    }
+    for (int i = 0; i < 50; ++i) {
+        if (bank[0][i] != 0) {
+            bank[1][i] += bank[1][i] * d / 100;
+        }
+    }
+}
+
+void print() {
+    for (int i = 0; i < 50; ++i) {
+        if (bank[0][i] != 0) {
+            printf("Account number %d: %.2lf$\n", (i + 901), bank[1][i]);
+        }
+    }
+}
+
+void closeAll() {
+    for (int i = 0; i < 50; ++i) {
+        bank[0][i] = 0;
+    }
 }
