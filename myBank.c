@@ -40,7 +40,7 @@ void withdrawal(int account_number, double amount) {
         printf("There is no enough money\n");
     } else {
         bank[1][account_number - 901] -= amount;
-        printf("You have %f dollars$$ left\n", bank[1][account_number - 901]);
+        printf("You have %.2f$ left\n", bank[1][account_number - 901]);
     }
 }
 
