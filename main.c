@@ -1,81 +1,86 @@
 #include <stdio.h>
 #include "myBank.h"
 
-void getInput(int *account, double *am) {
-    printf("Enter account number and amount:\n");
-    while (scanf(" %d", account) != 1) {
-        char c;
-        scanf("%c", &c);
+int accountInput(int *n) {
+    if (scanf(" %d", n) != 1) {
+        printf("Failed to read the account number\n");
+        return 0;
     }
-    while (scanf(" %lf", am) != 1) {
-        char c;
-        scanf("%c", &c);
-    }
-}
-
-void getAccountNum(int *an) {
-    printf("Enter account number\n");
-    while (scanf(" %d", an) != 1) {
-        char c;
-        scanf("%c", &c);
-    }
+    return 1;
 }
 
 int main() {
     char input;
     int account_number;
-    double amount;
-    double interest_rate;
+    double amount, interest_rate;
     do {
-        printf("\nEnter char operation:\n"
-               "\tO: Open account\n"
-               "\tB: Balance inquiry\n"
-               "\tD: Deposit\n"
-               "\tW: Withdrawal\n"
-               "\tC: Close account\n"
-               "\tI: Adding interest\n"
-               "\tP: Print all open accounts\n"
-               "\tE: Close all accounts and exit\n");
+        printf("\nPlease choose a transaction type:\n"
+               "O-Open Account\n"
+               "B-Balance Inquiry\n"
+               "D-Deposit\n"
+               "W-Withdrawal\n"
+               "C-Close Account\n"
+               "I-Interest\n"
+               "P-Print\n"
+               "E-Exit\n");
         scanf(" %c", &input);
         switch (input) {
             case 'O':
                 open();
                 break;
+
             case 'B':
-                getAccountNum(&account_number);
-                balance(account_number);
+                printf("Please enter account number: ");
+                if (accountInput(&account_number) == 1)
+                    balance(account_number);
                 break;
+
             case 'D':
-                getInput(&account_number, &amount);
-                deposit(account_number, amount);
-                break;
-            case 'W':
-                getInput(&account_number, &amount);
-                withdrawal(account_number, amount);
-                break;
-            case 'C':
-                getAccountNum(&account_number);
-                close(account_number);
-                break;
-            case 'I':
-                printf("Enter interest rate [-99, 99]\n");
-                while (scanf(" %lf", &interest_rate) != 1) {
-                    char c;
-                    scanf("%c", &c);
+                printf("Please enter account number: ");
+                if (accountInput(&account_number) == 1) {
+                    printf("Please enter the amount to deposit: ");
+                    if (scanf(" %lf", &amount) == 1) {
+                        deposit(account_number, amount);
+                    }
                 }
-                interest(interest_rate);
                 break;
+
+            case 'W':
+                printf("Please enter account number: ");
+                if (accountInput(&account_number) == 1) {
+                    printf("Please enter the amount to withdraw: ");
+                    if (scanf(" %lf", &amount) == 1) {
+                        withdrawal(account_number, amount);
+                    }
+                }
+                break;
+
+            case 'C':
+                if (accountInput(&account_number) == 1)
+                    close(account_number);
+                break;
+
+            case 'I':
+                printf("Please enter interest rate: ");
+                if (scanf(" %lf", &interest_rate) == 1) {
+                    interest(interest_rate);
+                } else {
+                    printf("Failed to read the interest rate\n");
+                }
+                break;
+
             case 'P':
                 print();
                 break;
+
             case 'E':
                 closeAll();
                 break;
+
             default:
-                printf("Enter valid char, not '%c'\n", input);
+                printf("Invalid transaction type\n");
                 break;
         }
     } while (input != 'E');
-
     return 0;
 }

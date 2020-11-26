@@ -6,14 +6,14 @@ void open() {
     int i;
     for (i = 0; i < 50; i++) {
         if (bank[0][i] == 0) {
-            bank[0][i] = 901.0 + i;
-            printf("The account number is: %d\n", 901 + i);
-            printf("Enter initial deposit: ");
+            printf("Please enter amount for deposit: ");
             double money;
-            while (scanf(" %lf", &money) != 1) {
-                char c;
-                scanf(" %c", &c);
+            if (scanf(" %lf", &money) != 1) {
+                printf("Failed to read the amount\n");
+                return;
             }
+            bank[0][i] = 901.0 + i;
+            printf("New account number is: %d\n", 901 + i);
             bank[1][i] = money;
             return;
         }
@@ -23,33 +23,34 @@ void open() {
 
 void balance(int account_number) {
     if (account_number < 901 || account_number > 950 || bank[0][account_number - 901] == 0) {
-        printf("There is no such account\n");
+        printf("This account is closed\n");
     } else
-        printf("The balance is %.2f $\n", bank[1][account_number - 901]);
+        printf("The balance of account number %d is: %.2f\n", account_number, bank[1][account_number - 901]);
 }
 
 void deposit(int account_number, double amount) {
     if (account_number < 901 || account_number > 950 || bank[0][account_number - 901] == 0) {
-        printf("There is no such account\n");
-    } else
+        printf("This account is closed\n");
+    } else {
         bank[1][account_number - 901] += amount;
-
+        printf("The new balance is: %.2f\n", bank[1][account_number - 901]);
+    }
 }
 
 void withdrawal(int account_number, double amount) {
     if (account_number < 901 || account_number > 950 || bank[0][account_number - 901] == 0) {
-        printf("There is no such account\n");
+        printf("This account is closed\n");
     } else if (bank[1][account_number - 901] - amount < 0) {
-        printf("There is no enough money\n");
+        printf("Cannot withdraw more than the balance\n");
     } else {
         bank[1][account_number - 901] -= amount;
-        printf("You have %.2f$ left\n", bank[1][account_number - 901]);
+        printf("The new balance is: %.2f\n", bank[1][account_number - 901]);
     }
 }
 
 void close(int account_number) {
     if (account_number < 901 || account_number > 950 || bank[0][account_number - 901] == 0) {
-        printf("There is no such account\n");
+        printf("This account is closed\n");
     } else {
         bank[0][account_number - 901] = 0;
         bank[0][account_number - 901] = 0;
@@ -71,7 +72,7 @@ void interest(double d) {
 void print() {
     for (int i = 0; i < 50; ++i) {
         if (bank[0][i] != 0) {
-            printf("Account number %d: %.2lf$\n", (i + 901), bank[1][i]);
+            printf("The balance of account number %d is: %.2lf\n", (i + 901), bank[1][i]);
         }
     }
 }
