@@ -10,7 +10,10 @@ void open() {
             printf("The account number is: %d\n", 901 + i);
             printf("Enter initial deposit: ");
             double money;
-            scanf(" %lf", &money);
+            while (scanf(" %lf", &money) != 1) {
+                char c;
+                scanf(" %c", &c);
+            }
             bank[1][i] = money;
             return;
         }

@@ -3,8 +3,22 @@
 
 void getInput(int *account, double *am) {
     printf("Enter account number and amount:\n");
-    scanf(" %d", account);
-    scanf(" %lf", am);
+    while (scanf(" %d", account) != 1) {
+        char c;
+        scanf("%c", &c);
+    }
+    while (scanf(" %lf", am) != 1) {
+        char c;
+        scanf("%c", &c);
+    }
+}
+
+void getAccountNum(int *an) {
+    printf("Enter account number\n");
+    while (scanf(" %d", an) != 1) {
+        char c;
+        scanf("%c", &c);
+    }
 }
 
 int main() {
@@ -28,8 +42,7 @@ int main() {
                 open();
                 break;
             case 'B':
-                printf("Enter account number\n");
-                scanf(" %d", &account_number);
+                getAccountNum(&account_number);
                 balance(account_number);
                 break;
             case 'D':
@@ -41,13 +54,15 @@ int main() {
                 withdrawal(account_number, amount);
                 break;
             case 'C':
-                printf("Enter account number\n");
-                scanf(" %d", &account_number);
+                getAccountNum(&account_number);
                 close(account_number);
                 break;
             case 'I':
                 printf("Enter interest rate [-99, 99]\n");
-                scanf(" %lf", &interest_rate);
+                while (scanf(" %lf", &interest_rate) != 1) {
+                    char c;
+                    scanf("%c", &c);
+                }
                 interest(interest_rate);
                 break;
             case 'P':
